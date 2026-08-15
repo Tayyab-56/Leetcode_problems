@@ -3,31 +3,17 @@
  * @return {number}
  */
 var longestSubsequence = function(nums) {
-    let ans = 1;
-    let result = 0;
-    let j = 0;
-    let temp = nums[0];
-    for (let i = 1; i < nums.length; i++) {
-        temp ^= nums[i];
-        if (temp !== 0) {
-            ans++;
-            j = i;
-            break;
+    let xor = 0;
+    for (const num of nums) {
+        xor ^= num;
+    }
+    if (xor !== 0) {
+        return nums.length;
+    }
+    for (const num of nums) {
+        if (num !== 0) {
+            return nums.length - 1;
         }
     }
-    if(j === nums.length-1) {
-        return ans;
-    }
-    for (let i = j+1; i < nums.length; i++) {
-        temp ^= nums[i];
-        if (temp !== 0) {
-            ans++;
-        }
-        else {
-            temp = nums[i];
-            result = Math.max(result, ans);
-            ans = 1;
-        }
-    }
-    return Math.max(result, ans);
+    return 0;
 };
