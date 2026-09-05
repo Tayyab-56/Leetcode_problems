@@ -1,0 +1,24 @@
+/**
+ * @param {number[]} nums
+ * @param {number} k
+ * @return {number}
+ */
+var firstStableIndex = function(nums, k) {
+    let n = nums.length;
+    let prefixMax = new Array(n);
+    let suffixMin = new Array(n);
+    prefixMax[0] = nums[0];
+    for (let i = 1; i < n; i++) {
+        prefixMax[i] = Math.max(prefixMax[i - 1], nums[i]);
+    }
+    suffixMin[n - 1] = nums[n - 1];
+    for (let i = n - 2; i >= 0; i--) {
+        suffixMin[i] = Math.min(suffixMin[i + 1], nums[i]);
+    }
+    for (let i = 0; i < n; i++) {
+        if (prefixMax[i] - suffixMin[i] <= k) {
+            return i;
+        }
+    }
+    return -1;
+};
